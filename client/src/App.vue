@@ -35,7 +35,7 @@
 
               <router-link to="/cart" class="button is-sucess">
                 <span class="icon"><i class="fas fa-shopping-cart"></i></span>
-                <span>Cart</span>
+                <span>Cart {{cartTotalLength}}</span>
               </router-link>
             </div>
           </div>
@@ -53,7 +53,7 @@
   </div>
 </template>
 <script>
-import {mapState, mapMutations, mapGetters} from 'vuex'
+import {mapState, mapMutations, mapGetters, mapActions} from 'vuex'
 
 export default {
   data() {
@@ -61,8 +61,9 @@ export default {
       showMobileMenu: false,
     };
   },
-  beforeCreate(){
+  created(){
     this.initializeCart()
+    console.log("DONE")
   },
   computed: {
     ...mapGetters('authentication', [
@@ -71,9 +72,13 @@ export default {
     ...mapState('authentication', [
 
       ]),
+    ...mapState('cart', [
+        'cart',
+        'cartTotalLength',
+    ]),
   },
   methods: {
-    ...mapMutations('cart', [
+    ...mapActions('cart', [
         'initializeCart'
       ]),
 

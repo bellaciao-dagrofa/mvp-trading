@@ -39,34 +39,24 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
+import { mapState, mapActions, mapMutations } from "vuex";
 
 
 export default {
   name: "Home",
-  data(){
-    return{
-      latestProducts: [],
-    }
+  async mounted(){
+    await this.getLatestProducts()
   },
-  components: {
-
-  },
-  mounted(){
-    this.getLatestProducts()
+  computed:{
+    ...mapState('product', [
+      'latestProducts'
+    ])
   },
   methods: {
-    getLatestProducts(){
-      axios
-        .get('/api/v1/latest-products/')
-        .then(response =>{
-            this.latestProducts = response.data
-        })
-        .catch(error=>{
-          console.log(error)  
-        })
-    }
-  }
+    ...mapActions('product', [
+        'getLatestProducts'
+    ])
+  },
 };
 </script>
 
