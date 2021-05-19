@@ -3,21 +3,27 @@ import Vuex from 'vuex';
 import product from './product'
 import cart from './cart'
 import authentication from './authentication'
+import category from './category'
+import loading from './loading'
+
 
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    baseUrl: '/api'
+    baseUrl: '/api',
   },
   mutations: {
+
   },
   actions: {
   },
   modules: {
+    category,
     cart,
     product,
-    authentication
+    authentication,
+    loading
   },
 });

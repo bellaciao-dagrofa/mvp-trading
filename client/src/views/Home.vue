@@ -12,7 +12,7 @@
         <h2 class="is-size-3 has-text-centered">Latest Products</h2>
       </div>
 
-      <div
+      <!-- <div
         class="column is-3"
         v-for="product in latestProducts"
         v-bind:key="product.id"
@@ -32,7 +32,11 @@
               View details
           </router-link>
         </div>
-      </div>
+      </div> -->
+    <ProductBox 
+        v-for="product in latestProducts"
+        :key="product.id"
+        :product="product"/>
     </div>
   </div>
 </template>
@@ -40,11 +44,15 @@
 <script>
 // @ is an alias to /src
 import { mapState, mapActions, mapMutations } from "vuex";
-
+import ProductBox from '@/components/ProductBox.vue'
 
 export default {
   name: "Home",
+  components:{
+    ProductBox
+    },
   async mounted(){
+    document.title = "Home | Sutrix-ecommerce"
     await this.getLatestProducts()
   },
   computed:{

@@ -33,7 +33,10 @@
           </div>
 
           <div class="control">
-            <a class="button is-dark" @click="addToCart()"> Add to cart </a>
+            <a class="button is-dark" 
+              @click="addToCartProduct()"> 
+              Add to cart 
+            </a>
           </div>
         </div>
       </div>
@@ -42,6 +45,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import { toast } from 'bulma-toast'
 
 export default {
   name: "Product",
@@ -50,7 +54,7 @@ export default {
       'product',
     ]),
     ...mapState('cart', [
-      'quantity'
+      'quantity',
     ]),
   },
   methods: {
@@ -62,12 +66,29 @@ export default {
     ]),
     ...mapMutations('cart', [
       'setQuantity'
-    ])
+    ]),
+    addToCartProduct(){
+      this.addToCart()
+      toast({
+        message: "The product was added to the cart",
+        type: 'is-success',
+        dismissible: true,
+        pauseOnHover: true,
+        duration: 2000,
+        position: 'bottom-right'
+        
+      })
+    },
+  
   },
+  
   mounted() {
     const category_slug = this.$route.params.category_slug
     const product_slug = this.$route.params.product_slug
     this.getProduct({category_slug, product_slug})
+    const default_string = " | Sutrix-ecommerce"
+    const title_string = product_slug.concat(default_string)
+    document.title = title_string
   },
 };
 </script>

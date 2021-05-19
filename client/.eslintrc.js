@@ -40,6 +40,9 @@ module.exports = {
     "max-len": "off",
     "comma-spacing": "off",
     "radix": "off",
-    "no-restricted-globals": "off"
+    "no-restricted-globals": "off",
+    "no-multi-spaces": "off",
+    "vue/no-unused-components": "off",
+    
   },
 };

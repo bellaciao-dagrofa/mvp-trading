@@ -33,23 +33,18 @@ export default {
                 // console.log(i)
                 return i.id === product_object.id
             })
-            console.log(exists)
             if(exists.length){
-                console.log("OYOYYOYO")
+                exists[0].quantity = parseInt(exists[0].quantity) + parseInt(quantity)
+                // console.log("EXISTS", exists[0])
             }
-            // const exists = state.cart.items.filter((i)=>{
-            //     console.log(i)
-            //     console.log(item)
-            //     return i.id === item.id
-            // })
-            // if (exists.length){
-            //     exists[0].quantity = parseInt(exists[0].quantity) + parseInt(item.quantity)
-            // }
-            // else{
-            //     commit('pushItemToCart', item)
-            // }    
-            // localStorage.setItem('cart', JSON.stringify(state.cart))
-            // commit('countCartTotalLength')
+            else{
+                commit('pushItemToCart', {product_object, quantity})
+            }
+
+            localStorage.setItem('cart', JSON.stringify(state.cart))
+            commit('countCartTotalLength')
+            commit('setQuantity', 1)
+          
         },
         
       
@@ -61,25 +56,34 @@ export default {
         setCart(state, cart){
             state.cart = cart
         },
-        pushItemToCart(state, item){
-            state.cart.items.push(item)
+        pushItemToCart(state, {product_object, quantity}){
+            product_object.quantity = quantity
+            state.cart.items.push(product_object)
         },
         countCartTotalLength(state){
             const cartItem = state.cart.items
             let totalLength = 0
             cartItem.forEach((item)=>{
                 console.log(item)
-                totalLength += item.quantity
+                totalLength += parseInt(item.quantity)
             }) 
-            console.log(totalLength)
+            // console.log(totalLength)
+            state.cartTotalLength = totalLength
         },
         setQuantity(state, quantity){
-            console.log("SET QUANTITY")
-            if(isNaN(quantity) || quantity < 1)
-            {
-                quantity = 1
+            let quantity_value = 0
+            if(Number.isInteger(quantity)){
+                quantity_value = quantity
             }
-            state.quantity = quantity
+            else{
+                quantity_value = quantity.target.value
+            }
+            console.log("SET QUANTITY", quantity_value)
+            if(isNaN(quantity_value) || quantity_value < 1)
+            {
+                quantity_value = 1
+            }
+            state.quantity = quantity_value
         }
 
     },

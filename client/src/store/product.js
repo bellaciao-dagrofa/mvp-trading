@@ -7,29 +7,54 @@ export default {
     namespaced: true,
     state : {
         latestProducts: [],
+        searchProducts: [],
         product: {},
+        searchWord: null,
     },
     actions: {
-        getLatestProducts({commit}){
+        async getLatestProducts({commit}){
+            commit('loading/setIsLoading', true,  { root: true })
             console.log("GET LATEST PRODUCTS")
-            return HTTP().get('v1/latest-products/')
+            await HTTP().get('v1/latest-products/')
             .then(({data})=>{
                 commit('setLatestProducts', data)
             })
             .catch((error)=>{
                 console.log(error)
             })
+            commit('loading/setIsLoading', false,  { root: true })
+
         },
-        getProduct({commit}, {category_slug, product_slug}){
+        async getProduct({commit}, {category_slug, product_slug}){
+            commit('loading/setIsLoading', true,  { root: true })
             console.log("GET PRODUCT")
-            return HTTP().get(`v1/products/${category_slug}/${product_slug}`)
+            await HTTP().get(`v1/products/${category_slug}/${product_slug}`)
             .then(({data})=>{
                 commit('setProduct', data)
             })
             .catch(err =>{
                 console.log(err)
             })
+        //     setTimeout(() => { 
+        //     console.log("World!");
+        //     commit('setIsLoading', false)
+
+        // }, 2000);
+            commit('loading/setIsLoading', false,  { root: true })
+
         },
+        async search({commit, state}){
+            console.log("SEARCHING")
+            await HTTP().post('v1/products_search/', {
+                query: state.searchWord
+            })
+            .then(({data})=>{
+               commit('setSearchProducts', data)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        }
     },
     getters: {
 
@@ -40,7 +65,16 @@ export default {
         },
         setProduct(state, product){
             state.product = product
+        },
+        setSearchWord(state, searchWord){
+            const searchWordValue = searchWord.target.value
+            // console.log("YOYOYOYO", searchWord.target.value)
+            state.searchWord = searchWordValue
+        },
+        setSearchProducts(state, searchResult){
+            state.searchProducts = searchResult
         }
+      
 
     },
 
