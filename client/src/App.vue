@@ -51,8 +51,8 @@
           </div>
         </div>
         <div class="navbar-end">
-          <router-link to="/summer" class="navbar-item">Summer</router-link>
-          <router-link to="/winter" class="navbar-item">Winter</router-link>
+          <router-link to="/category/summer" class="navbar-item">Summer</router-link>
+          <router-link to="/category/winter" class="navbar-item">Winter</router-link>
 
           <div class="navbar-item">
             <div class="buttons">
@@ -60,7 +60,7 @@
                 >Login</router-link
               >
 
-              <router-link to="/cart" class="button is-success">
+              <router-link to="/cart/" class="button is-success">
                 <span class="icon"><i class="fas fa-shopping-cart"></i></span>
                 <span>Cart {{ cartTotalLength }}</span>
               </router-link>
@@ -87,6 +87,7 @@
 </template>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import router from './router'
 
 export default {
   data() {
@@ -113,7 +114,11 @@ export default {
     ...mapMutations("product", ["setSearchWord"]),
     searchItem(){
       this.search()
-      
+      if(this.$route.name !== 'Search'){
+        router.push({name: 'Search'})
+
+      }
+     
     }
   },
 };

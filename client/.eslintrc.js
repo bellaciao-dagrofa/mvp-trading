@@ -43,6 +43,7 @@ module.exports = {
     "no-restricted-globals": "off",
     "no-multi-spaces": "off",
     "vue/no-unused-components": "off",
-    
+    "space-unary-ops": "off",
+    "space-in-parens": "off",
   },
 };

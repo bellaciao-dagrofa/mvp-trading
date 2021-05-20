@@ -10,6 +10,7 @@ export default {
         searchProducts: [],
         product: {},
         searchWord: null,
+        searchTerm: null,
     },
     actions: {
         async getLatestProducts({commit}){
@@ -45,6 +46,8 @@ export default {
         },
         async search({commit, state}){
             console.log("SEARCHING")
+            commit('loading/setIsLoading', true,  { root: true })
+
             await HTTP().post('v1/products_search/', {
                 query: state.searchWord
             })
@@ -54,6 +57,10 @@ export default {
             .catch(err=>{
                 console.log(err)
             })
+            commit('setSearchTerm', state.searchWord)
+            commit('setSearchWord', null)
+            commit('loading/setIsLoading', false,  { root: true })
+
         }
     },
     getters: {
@@ -67,12 +74,19 @@ export default {
             state.product = product
         },
         setSearchWord(state, searchWord){
-            const searchWordValue = searchWord.target.value
-            // console.log("YOYOYOYO", searchWord.target.value)
+            let searchWordValue = null
+            if (searchWord !== null ){
+                if (typeof(searchWord) !== "string"){
+                    searchWordValue = searchWord.target.value
+                }
+            }
             state.searchWord = searchWordValue
         },
         setSearchProducts(state, searchResult){
             state.searchProducts = searchResult
+        },
+        setSearchTerm(state, searchTerm){
+            state.searchTerm = searchTerm
         }
       
 

@@ -6,12 +6,12 @@
                     Search
                 </h1>
                 <h2 class="is-size-5 has-text-grey">
-                    Search term: "{{query}}"
+                    Search term: "{{searchTerm}}"
                 </h2>
             </div>
 
             <ProductBox 
-                v-for="product in products"
+                v-for="product in searchProducts"
                 :key="product.id"
                 :product="product"/>
         </div>
@@ -20,13 +20,27 @@
 
 <script>
 import ProductBox from '@/components/ProductBox.vue'
+import {mapState, mapActions} from 'vuex'
 
 
 export default {
     name: "Search",
     components: {
         ProductBox,
-    }
+    },
+    computed:{
+        ...mapState('product', [
+            "searchProducts",
+            "searchWord",
+            "searchTerm"
+        ])
+    },
+    methods:{
+
+    },
+    // mounted(){
+
+    // }
 }
 </script>
 
