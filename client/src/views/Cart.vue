@@ -35,6 +35,6 @@ import {mapState} from 'vuex'
 
 export default {
     name: 'Cart',
-    c
+    // c
 }
 </script>

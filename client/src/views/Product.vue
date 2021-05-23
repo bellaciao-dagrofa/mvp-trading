@@ -2,11 +2,14 @@
   <div class="page-product">
     <div class="columns is-multiline">
       <div class="column is-9">
-        <figure class="image mb-6">
+        <!-- <figure class="image mb-6">
           <img :src="product.get_image" />
         </figure>
-
-        <h1 class="title">
+         -->
+        <div>
+              <LazyYoutube :src="product.url" />
+        </div>
+        <h1 class="title sub-color">
           {{ product.name }}
         </h1>
         <p>
@@ -15,9 +18,9 @@
       </div>
 
       <div class="column is-3">
-        <h2 class="subtitle">Information</h2>
+        <h2 class="subtitle sub-color">Information</h2>
         <p>
-          <strong> Price: </strong>
+          <strong class="price-color"> <u>Price: </u></strong>
           $ {{ product.price }}
         </p>
         <div class="field has-addons mt-6">
@@ -47,8 +50,15 @@
 import { mapState, mapActions, mapMutations } from "vuex";
 import { toast } from 'bulma-toast'
 
+import { LazyYoutube } from "vue-lazytube";
+
+
 export default {
   name: "Product",
+  components:{
+            LazyYoutube,
+
+  },
   computed: {
     ...mapState('product', [
       'product',
@@ -92,3 +102,13 @@ export default {
   },
 };
 </script>
+<style scoped lang="scss">
+
+.sub-color{
+  color: rgb(201, 206, 214)
+}
+
+.price-color{
+  color: red
+}
+</style>

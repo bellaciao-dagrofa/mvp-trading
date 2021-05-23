@@ -1,10 +1,8 @@
 <template>
   <div id="wrapper">
-    <nav class="navbar is-dark">
+    <nav class="navbar navbar-color">
       <div class="navbar-brand">
-        <router-link to="/" class="navbar-item"
-          ><strong>E Commerce</strong></router-link
-        >
+        <router-link to="/" class="navbar-item"><strong>MVP E-Commerce</strong></router-link>
 
         <a
           class="navbar-burger"
@@ -18,47 +16,43 @@
           <span aria-hidden="true"></span>
         </a>
       </div>
-      <div
-        class="navbar-menu"
-        id="navbar-menu"
-        v-bind:class="{ 'is-active': showMobileMenu }"
-      >
+      <div class="navbar-menu" id="navbar-menu" v-bind:class="{ 'is-active': showMobileMenu }">
         <div class="navbar-start">
           <div class="navbar-item">
             <!-- <form> -->
-              <div class="field has-addons">
-                <div class="control">
-                  <input
-                    type="text"
-                    class="input"
-                    placeholder="What are you looking for?"
-                    :value="searchWord"
-                    @input="setSearchWord"
-                  />
-                </div>
-
-                <div class="control">
-                  <button 
-                    class="button is-success"
-                    @click="searchItem()">
-                    <span class="icon">
-                      <i class="fas fa-search"></i>
-                    </span>
-                  </button>
-                </div>
+            <div class="field has-addons">
+              <div class="control">
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="What are you looking for?"
+                  :value="searchWord"
+                  @input="setSearchWord"
+                />
               </div>
+
+              <div class="control">
+                <button class="button is-success" @click="searchItem()">
+                  <span class="icon">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
             <!-- </form> -->
           </div>
         </div>
         <div class="navbar-end">
-          <router-link to="/category/summer" class="navbar-item">Summer</router-link>
-          <router-link to="/category/winter" class="navbar-item">Winter</router-link>
-
+          <div v-for="category in categories" :key="category.id">
+            <router-link :to="category.get_absolute_url" class="navbar-item">{{
+              category.name
+            }}</router-link>
+            <!-- <router-link to="/category/summer" class="navbar-item">Summer</router-link>
+          <router-link to="/category/winter" class="navbar-item">Winter</router-link> -->
+          </div>
           <div class="navbar-item">
             <div class="buttons">
-              <router-link to="/login" class="button is-light"
-                >Login</router-link
-              >
+              <router-link to="/login" class="button is-light">Login</router-link>
 
               <router-link to="/cart/" class="button is-success">
                 <span class="icon"><i class="fas fa-shopping-cart"></i></span>
@@ -69,10 +63,7 @@
         </div>
       </div>
     </nav>
-    <div
-      class="is-loading-bar has-text-centered"
-      :class="{ 'is-loading': isLoading }"
-    >
+    <div class="is-loading-bar has-text-centered" :class="{ 'is-loading': isLoading }">
       <div class="lds-dual-ring"></div>
     </div>
 
@@ -87,40 +78,39 @@
 </template>
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-import router from './router'
+import router from "./router";
 
 export default {
   data() {
     return {
-      showMobileMenu: false,
+      showMobileMenu: false
     };
   },
   created() {
     this.initializeCart();
+    this.getCategories();
     console.log("DONE");
   },
   computed: {
+    ...mapState("category", ["categories"]),
     ...mapGetters("authentication", []),
     ...mapState("loading", ["isLoading"]),
     ...mapState("authentication", []),
     ...mapState("cart", ["cart", "cartTotalLength"]),
-    ...mapState("product", ["searchWord"]),
+    ...mapState("product", ["searchWord"])
   },
   methods: {
     ...mapActions("cart", ["initializeCart"]),
-    ...mapActions('product', [
-      'search'
-    ]),
+    ...mapActions("product", ["search"]),
+    ...mapActions("category", ["getCategories"]),
     ...mapMutations("product", ["setSearchWord"]),
-    searchItem(){
-      this.search()
-      if(this.$route.name !== 'Search'){
-        router.push({name: 'Search'})
-
+    searchItem() {
+      this.search();
+      if (this.$route.name !== "Search") {
+        router.push({ name: "Search" });
       }
-     
     }
-  },
+  }
 };
 </script>
 
@@ -159,5 +149,14 @@ export default {
   &.is-loading {
     height: 80px;
   }
+}
+
+.section {
+  background: rgba(6, 28, 37, 0.9);
+  color: white;
+}
+
+.navbar-color {
+  background: rgb(33, 33, 39);
 }
 </style>

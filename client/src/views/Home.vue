@@ -2,8 +2,8 @@
   <div class="home">
     <section class="hero is-medium is-dark mb-6">
       <div class="hero-body has-text-centered">
-        <p class="title mb-6">Welcome to Django E-commerce</p>
-        <p class="subtitle">the best E-commerce store offline</p>
+        <p class="title mb-6">Welcome to MVP E-commerce</p>
+        <p class="subtitle">the best E-commerce store with BSC</p>
       </div>
     </section>
 
@@ -58,17 +58,19 @@ export default {
   computed:{
     ...mapState('product', [
       'latestProducts'
-    ])
+    ]),
   },
   methods: {
     ...mapActions('product', [
         'getLatestProducts'
-    ])
+    ]),
   },
 };
 </script>
 
 <style scoped>
+
+
 .image{
   margin-top: -1.25rem;
   margin-left: -1.25rem;

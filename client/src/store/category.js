@@ -8,7 +8,8 @@ export default {
        category:{
            products: []
        },
-       error: null
+       error: null,
+       categories: [],
     },
     mutations: {
         setCategory(state, category){
@@ -16,9 +17,22 @@ export default {
         },
         setError(state, error){
             state.error = error
+        },
+        setCategories(state, categories){
+            state.categories = categories
         }
     },
     actions:{
+        async getCategories({commit}){
+            console.log("FETCH CATEGORIES")
+            await HTTP().get('v1/categories/')
+            .then(({data})=>{
+                commit('setCategories', data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        },
         async getCategory({commit}, {category_slug}){
             console.log(category_slug)
             console.log("GET CATEGORY")
