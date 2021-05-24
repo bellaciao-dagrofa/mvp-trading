@@ -2,8 +2,8 @@
   <div class="home">
     <section class="hero is-medium is-dark mb-6">
       <div class="hero-body has-text-centered">
-        <p class="title mb-6">Welcome to MVP E-commerce</p>
-        <p class="subtitle">the best E-commerce store with BSC</p>
+        <p class="title mb-6">Welcome to MVP</p>
+        <p class="subtitle">best E-sport NFT trading on Binance Smart Chain</p>
       </div>
     </section>
 
@@ -52,7 +52,7 @@ export default {
     ProductBox
     },
   async mounted(){
-    document.title = "Home | Sutrix-ecommerce"
+    document.title = "MVP | Top E-sport NFT trading"
     await this.getLatestProducts()
   },
   computed:{

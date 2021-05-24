@@ -6,6 +6,7 @@ from django.core.files import File
 from django.db import models
 
 # Create your models here.
+BASE_URL = "http://34.126.166.154"
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -45,13 +46,13 @@ class Product(models.Model):
 
     def get_image(self):
         if self.image:
-            return 'http://127.0.0.1:8000' + self.image.url
+            return BASE_URL + self.image.url
         
         return ''
 
     def get_thumbnail(self):
         if self.thumbnail:
-            return 'http://127.0.0.1:8000' + self.thumbnail.url
+            return BASE_URL + self.thumbnail.url
         else:
             if self.image:
                 self.thumbnail = self.make_thumbnail(self.image)
