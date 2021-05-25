@@ -45,5 +45,7 @@ module.exports = {
     "vue/no-unused-components": "off",
     "space-unary-ops": "off",
     "space-in-parens": "off",
+    "quote-props": "off",
+    "new-cap": "off",
   },
 };

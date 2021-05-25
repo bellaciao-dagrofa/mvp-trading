@@ -2,22 +2,21 @@ import Vue from 'vue'
 
 export default {
     state: {
-        loginUsername: null,
-        loginPassword: null,
-
-        registerUsername: null,
-        registerPassword: null,
-        registerEmail: null,
-
-        token: null,
+       walletID:null,
     },
     mutations: {
+        setWalletID(state, walletID){
+            state.walletID = walletID
+        }
 
     },
     actions:{
 
     },
     getters:{
-        
+        isConnected(state){
+            return !!state.walletID
+
+        }
     }
 }

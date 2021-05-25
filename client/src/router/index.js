@@ -5,7 +5,8 @@ import Product from '../views/Product.vue'
 import Category from '../views/Category.vue'
 import Search from '../views/Search.vue'
 import Cart from '../views/Cart.vue'
-
+import TestMetaMask from '../views/TestMetaMask.vue'
+import CreateProduct from '../views/CreateProduct.vue'
 
 Vue.use(VueRouter);
 
@@ -42,6 +43,16 @@ const routes = [
     path: '/cart/',
     name: 'Cart',
     component: Cart
+  },
+  {
+    path: '/testMetaMask',
+    name: "testMetaMask",
+    component: TestMetaMask
+  },
+  {
+    path: '/createProduct',
+    name: 'createProduct',
+    component: CreateProduct
   }
 ];
 

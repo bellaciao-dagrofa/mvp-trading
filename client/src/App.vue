@@ -2,7 +2,10 @@
   <div id="wrapper">
     <nav class="navbar navbar-color">
       <div class="navbar-brand">
-        <router-link to="/" class="navbar-item"><strong>MVP E-Commerce</strong></router-link>
+        <router-link to="/" class="navbar-item">
+          <!-- <strong>MVP trading</strong> -->
+          <img src="https://lh5.googleusercontent.com/Ja0yCw81LMzaCw8JcfKt6i8QnEYr0r9y1ZwSjr3kwHGIvhpVSia-usYXEB4B0NpwxsXAoZmyaEdFjLO3evyH1DyfTebRNoyeTwYL2K_OFNbCcqFO398SzYbiPA_kFJ3VcLit2G4QzJ4"/>
+        </router-link>
 
         <a
           class="navbar-burger"
@@ -52,7 +55,7 @@
           </div>
           <div class="navbar-item">
             <div class="buttons">
-              <router-link to="/login" class="button is-light">Login</router-link>
+              <router-link to="/login" class="button is-light">Connect to Wallet</router-link>
 
               <router-link to="/cart/" class="button is-success">
                 <span class="icon"><i class="fas fa-shopping-cart"></i></span>

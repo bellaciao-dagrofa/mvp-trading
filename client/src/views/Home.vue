@@ -2,7 +2,8 @@
   <div class="home">
     <section class="hero is-medium is-dark mb-6">
       <div class="hero-body has-text-centered">
-        <p class="title mb-6">Welcome to MVP</p>
+        <!-- <p class="title mb-6">Welcome to MVP</p> -->
+        <img src="https://lh5.googleusercontent.com/Ja0yCw81LMzaCw8JcfKt6i8QnEYr0r9y1ZwSjr3kwHGIvhpVSia-usYXEB4B0NpwxsXAoZmyaEdFjLO3evyH1DyfTebRNoyeTwYL2K_OFNbCcqFO398SzYbiPA_kFJ3VcLit2G4QzJ4"/>                
         <p class="subtitle">best E-sport NFT trading on Binance Smart Chain</p>
       </div>
     </section>

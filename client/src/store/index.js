@@ -5,7 +5,7 @@ import cart from './cart'
 import authentication from './authentication'
 import category from './category'
 import loading from './loading'
-
+import product_nft from './product_nft'
 
 
 Vue.use(Vuex);
@@ -24,6 +24,7 @@ export default new Vuex.Store({
     cart,
     product,
     authentication,
-    loading
+    loading,
+    product_nft,
   },
 });
