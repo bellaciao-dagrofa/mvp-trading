@@ -55,7 +55,7 @@
           </div>
           <div class="navbar-item">
             <div class="buttons">
-              <router-link to="/login" class="button is-light">Connect to Wallet</router-link>
+              <router-link to="/connectWallet" class="button is-light">{{this.getWalletID()}}</router-link>
 
               <router-link to="/cart/" class="button is-success">
                 <span class="icon"><i class="fas fa-shopping-cart"></i></span>
@@ -73,6 +73,16 @@
     <section class="section">
       <router-view />
     </section>
+    <div class="create-product" @click="moveToCreateProduct()">
+      <div class="create">
+        <div class="block1">
+        <i class="fas fa-plus-circle fa-3x"></i>
+        </div>
+        <div class="block2">
+           Create Product
+        </div>
+      </div>
+    </div>
 
     <footer class="footer">
       <p class="has-text-centered">Copyright (c) 2021</p>
@@ -96,9 +106,13 @@ export default {
   },
   computed: {
     ...mapState("category", ["categories"]),
-    ...mapGetters("authentication", []),
+    ...mapGetters("authentication", [
+      'isConnected'
+    ]),
     ...mapState("loading", ["isLoading"]),
-    ...mapState("authentication", []),
+    ...mapState("authentication", [
+      "walletID"
+    ]),
     ...mapState("cart", ["cart", "cartTotalLength"]),
     ...mapState("product", ["searchWord"])
   },
@@ -112,6 +126,17 @@ export default {
       if (this.$route.name !== "Search") {
         router.push({ name: "Search" });
       }
+    },
+    moveToCreateProduct(){
+      console.log("YOYOYOYOYO")
+      router.push('/createProduct')
+    },
+    getWalletID(){
+      console.log("WALLET_STATUS", this.isConnected)
+      if(this.isConnected){
+        return this.walletID
+      }
+      return "Connect to wallet"
     }
   }
 };
@@ -162,4 +187,26 @@ export default {
 .navbar-color {
   background: rgb(33, 33, 39);
 }
+
+.create-product {
+   position: fixed;
+    bottom: 2em;
+    right: 1em;
+    
+
+    .create{
+      // background-color: green;
+      color: green;
+      height: 50px;
+      width: 120px;
+
+      .block1 .block2{
+        display: inline;
+      }
+
+    }
+}
+.create-product:hover{
+      cursor: pointer;
+    }
 </style>

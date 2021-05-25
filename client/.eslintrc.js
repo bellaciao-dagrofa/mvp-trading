@@ -47,5 +47,7 @@ module.exports = {
     "space-in-parens": "off",
     "quote-props": "off",
     "new-cap": "off",
+    "global-require": "off",
+    "no-await-in-loop": "off",
   },
 };

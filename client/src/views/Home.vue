@@ -34,10 +34,15 @@
           </router-link>
         </div>
       </div> -->
-    <ProductBox 
-        v-for="product in latestProducts"
+    <!-- <ProductBox 
+        v-for="product in products"
         :key="product.id"
-        :product="product"/>
+        :product="product"/> -->
+      <ProductNFTBox 
+        v-for="product in products"
+        :key="product.tokenId"
+        :product="product"
+      />
     </div>
   </div>
 </template>
@@ -46,25 +51,144 @@
 // @ is an alias to /src
 import { mapState, mapActions, mapMutations } from "vuex";
 import ProductBox from '@/components/ProductBox.vue'
+import ProductNFTBox from '@/components/ProductNFTBox.vue';
+import axios from 'axios'
+
+
+const Contract = require("web3-eth-contract");
+
+const PROVIDER = "https://data-seed-prebsc-2-s2.binance.org:8545"
+const BSC_TESTNET_ADDRESS = 'https://data-seed-prebsc-1-s1.binance.org:8545'
+const HOAN_ADDRESS = '0xc24BC060a2305E35641c4A67F0Ee4aD932b2E083'
+const MIN_ABI = [
+    {
+      "constant":true,
+      "inputs": [{"name":"tokenId","type":"uint256"}],
+      "name":"tokenURI",
+      "outputs":[{"name": "Chuong", "type":"string"}],
+      "type":"function"
+    },
+    {
+        "constant":true,
+        "inputs": [{"name":"tokenURI","type":"string"}],
+        "name":"createCollectible",
+        "outputs":[],
+        "type":"function"
+      },
+      {
+        "constant":true,
+        "inputs": [{"name":"tokenId","type":"uint256"}],
+        "name":"buy",
+        "outputs":[],
+        "type":"function"
+      },
+      {
+        "constant":true,
+        "inputs": [{"name":"tokenId","type":"uint256"}],
+        "name":"getPrice",
+        "outputs":[{"name": "price", "type":"uint"}],
+        "type":"function"
+      },
+      {
+        "constant":true,
+        "inputs": [{"name":"tokenId","type":"uint256"}],
+        "name":"ownerOf",
+        "outputs":[{"name": "onwnerAdress", "type":"address"}],
+        "type":"function"
+      },
+      {
+        "constant":true,
+        "inputs": [],
+        "name":"totalSupply",
+        "outputs":[{"name":"total supply", "type": "uint256" }],
+        "type":"function"
+      }
+  ];
+const NFT_SMARTCONTRACT_ADDRESS = '0x3CBCfEB7b8d93c501bcB155712FeecC8a45c1221'
 
 export default {
   name: "Home",
   components:{
-    ProductBox
+    ProductBox,
+    ProductNFTBox
     },
   async mounted(){
     document.title = "MVP | Top E-sport NFT trading"
-    await this.getLatestProducts()
+    // await this.getLatestProducts()
+    await this.fetchProductNFT()
   },
   computed:{
     ...mapState('product', [
       'latestProducts'
     ]),
+    ...mapState('product_nft', [
+      'products'
+    ])
   },
   methods: {
     ...mapActions('product', [
         'getLatestProducts'
     ]),
+
+    ...mapActions('product_nft', [
+    ]),
+
+    ...mapMutations('product_nft', [
+      "setProducts"
+    ]),
+     async whoOwnThisToken(tokenId, provider, minABI, contract_id) {
+      Contract.setProvider(provider);
+      const contract = new Contract(minABI, contract_id);
+      const owner = await contract.methods.tokenURI(tokenId).call();
+      // console.log("OWNER", owner);
+      const data_callback =  await  axios
+        .get(owner)
+        .then(({data}) =>{
+          // console.log(data)
+          return data
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+
+      return data_callback
+
+      
+    },
+    async totalSupply(provider, minABI, contract_id){
+      Contract.setProvider(provider);
+      const contract = new Contract(minABI, contract_id);
+      const URI_LINK = await contract.methods.totalSupply().call();
+      // console.log("COUNTING", URI_LINK)
+      return URI_LINK
+    },
+    async findOwner(token_id, provider, minABI, contract_id){
+      Contract.setProvider(provider)
+      const constract = new Contract(minABI, contract_id)
+      const owner_id = await constract.methods.ownerOf(token_id).call()
+      console.log("RESULT", owner_id)
+      return owner_id
+    },
+    async fetchProductNFT(){
+      const total_product = await this.totalSupply(PROVIDER, MIN_ABI, NFT_SMARTCONTRACT_ADDRESS)
+      console.log("TOTAL", total_product)
+      let index_product = 0
+      const product_list = []
+      while(index_product < total_product){
+        const data = await this.whoOwnThisToken(index_product, PROVIDER, MIN_ABI, NFT_SMARTCONTRACT_ADDRESS)
+        console.log(data)
+        const data_object = data
+        const owner_id = await this.findOwner(index_product, PROVIDER, MIN_ABI, NFT_SMARTCONTRACT_ADDRESS)
+        console.log("OWNER_ID", owner_id)
+        data_object.owner_id = owner_id
+        data_object.tokenId = index_product
+        product_list.push(data_object)
+        index_product += 1
+      }
+      console.log("LIST", product_list)
+      this.setProducts(product_list)
+
+    }
   },
 };
 </script>

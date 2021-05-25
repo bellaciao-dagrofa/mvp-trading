@@ -7,6 +7,9 @@ import Search from '../views/Search.vue'
 import Cart from '../views/Cart.vue'
 import TestMetaMask from '../views/TestMetaMask.vue'
 import CreateProduct from '../views/CreateProduct.vue'
+import Wallet from '../views/Wallet.vue';
+import ProductNFT from '../views/ProductNFT.vue';
+
 
 Vue.use(VueRouter);
 
@@ -53,6 +56,16 @@ const routes = [
     path: '/createProduct',
     name: 'createProduct',
     component: CreateProduct
+  },
+  {
+    path: "/connectWallet",
+    name: "connectWallet",
+    component: Wallet
+  },
+  {
+    path: "/productNFT",
+    name: "productNFT",
+    component: ProductNFT
   }
 ];
 
