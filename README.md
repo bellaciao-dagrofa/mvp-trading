@@ -1,2 +1,2 @@
-# e-commerce
-build e-commerce with django and vuejs
+# MVP-TRADING
+build with django and vuejs
